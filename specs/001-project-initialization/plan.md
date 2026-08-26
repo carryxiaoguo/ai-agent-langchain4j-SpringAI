@@ -18,7 +18,7 @@
 
 **测试**：Pytest、HTTPX、Ruff；Vitest、TypeScript、ESLint、Vite build
 
-**目标平台**：Windows 本地开发；Linux 部署兼容；Chrome/Edge；390 像素移动端
+**目标平台**：Windows 本地开发；Chrome/Edge；390 像素移动端；目标运行环境另行确认
 
 **项目类型**：前后端分离 Web 应用脚手架
 

@@ -9,6 +9,7 @@
 
 - 后端固定使用 Python 3.11、FastAPI 和 Pydantic v2，源码直接位于仓库根目录。
 - 前端固定使用 React 19、TypeScript 和 Vite，源码位于 `ai-agent-frontend/`。
+- 本项目只提供本地开发启动命令，不提供 Docker Compose、MinIO 或其他本地部署方案。
 - 所有开发必须先经过 Speckit 的规格、计划、任务和实现流程；任务完成后必须更新任务状态。
 - 代码和文档中的说明使用中文；代码注释必须说明必要的设计原因，避免无信息注释。
 - 新增技术或依赖时，技术文档必须说明它解决的问题、引入原因、版本和验证方式。
@@ -108,7 +109,7 @@ P0 行为和所有安全控制必须自动化覆盖。默认测试禁止调用�
 - 存储：PostgreSQL + pgvector 保存持久数据和向量；Redis 保存限流、取消标记、
   短期锁和临时协调状态；生成物存入兼容 S3 的对象存储。
 - 集成：Qwen/DashScope 必须经供应商适配接口接入；MCP 服务使用 Python MCP SDK
-  或 FastMCP；本地和测试环境使用 Docker Compose。
+  或 FastMCP；本项目不提供本地部署编排方案。
 - 质量工具：Ruff、静态类型检查器、Pytest、ESLint、TypeScript 检查、Vitest、
   Playwright，以及依赖和镜像漏洞扫描。
 

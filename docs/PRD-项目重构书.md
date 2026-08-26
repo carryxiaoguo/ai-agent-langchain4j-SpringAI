@@ -1,6 +1,6 @@
 # AI Agent Python + React 19 重构规格
 
-> 状态：Draft v0.1  
+> 状态：Draft v0.2
 > 日期：2026-08-26  
 > 参考仓库：[carryxiaoguo/ai-agent](https://github.com/carryxiaoguo/ai-agent)  
 > 目标：将现有 Java 21 + Spring AI + Vue 3 项目重构为 Python + React 19，并建立可上线的安全、测试和运维基线。
@@ -44,6 +44,7 @@
 
 ### 4.2 非目标
 
+- 本项目不提供 Docker Compose、MinIO 或其他一键本地部署方案；本地仅保留前后端开发启动命令。
 - 首版不开发完整账号注册、找回密码、计费和组织管理系统。
 - 首版不实现多智能体协作、工作流编辑器和模型市场。
 - 首版不要求兼容现有 Java 内部类、Kryo 文件或 Spring AI 内部数据结构。
@@ -90,7 +91,7 @@
 | 更稳定的聊天体验 | 统一流式协议、取消机制、错误事件和运行状态查询 |
 | 更安全地使用工具 | 工具白名单、参数校验、路径隔离、网络策略、超时和审计 |
 | 更容易判断效果 | 固定数据集、离线评测、调用追踪和新旧版本对比 |
-| 更容易部署维护 | 单一 Python API 服务、React 静态站点和标准容器部署 |
+| 更容易运行维护 | 单一 Python API 服务、React 静态站点和清晰的运行边界 |
 
 ## 7. 解决方案
 
@@ -163,7 +164,6 @@
 | F-062 | 前端 | 响应式与无障碍 | P0 | 桌面/移动端可用，键盘操作和焦点状态正确 |
 | F-063 | 前端 | Markdown 安全渲染 | P0 | 禁止脚本执行和危险 URL |
 | F-064 | 前端 | RAG 来源展示 | P1 | 可展开查看来源标题和摘要 |
-| F-070 | 运维 | Docker Compose 本地/测试部署 | P0 | 一条命令启动必要依赖 |
 | F-071 | 运维 | 数据库迁移 | P0 | Alembic 可升级并验证空库初始化 |
 | F-072 | 运维 | 指标、追踪和告警 | P0 | 可观察请求、模型、工具、错误和成本 |
 | F-073 | 运维 | 数据备份和恢复演练 | P1 | PostgreSQL 和对象存储可恢复 |
@@ -181,7 +181,7 @@
 | 数据访问 | SQLAlchemy 2、Alembic | 数据模型和迁移 |
 | 主存储 | PostgreSQL 16 + pgvector | 会话、消息、运行、文档元数据和向量 |
 | 临时状态 | Redis | 限流、取消标记、短期锁和多实例事件协调 |
-| 生成物 | S3 兼容对象存储 | 生产可用云存储，本地使用 MinIO |
+| 生成物 | S3 兼容对象存储 | 通过环境配置接入，不提供本地 MinIO 方案 |
 | MCP | 官方 Python MCP SDK/FastMCP | 图片搜索服务保持独立进程 |
 | 可观测性 | OpenTelemetry + Prometheus 兼容指标 | 结构化日志、Trace、模型和工具指标 |
 | 测试 | Pytest、Vitest、Playwright | 单元、契约、端到端和 AI 评测 |
@@ -205,7 +205,7 @@ flowchart LR
     R --> P
     K --> V[("PostgreSQL + pgvector")]
     A --> D[("Redis")]
-    T --> S[("S3 / MinIO")]
+    T --> S[("S3 兼容对象存储")]
     C --> M["Qwen / model provider"]
     R --> M
     K --> E["Embedding provider"]
@@ -541,7 +541,6 @@ data: {"schema_version":"1.0","seq":8,"request_id":"01K...","run_id":"019...","t
 | AC-E05 | Chrome、Edge 最新稳定版及 390 px 移动视口下无文本遮挡、控件重叠和横向溢出。 |
 | AC-E06 | 输入框、发送、取消、重试和返回功能可用键盘操作，焦点可见，颜色对比符合 WCAG AA。 |
 | AC-E07 | 所有数据库变更都有 Alembic 迁移；空数据库和前一版本数据库均可升级。 |
-| AC-E08 | Docker Compose 可以启动 Web、API、PostgreSQL/pgvector、Redis 和 MinIO，并通过就绪检查。 |
 | AC-E09 | AI 评测固定数据集、评分规则、模型参数和评审器版本；随机抽取至少 20% 结果进行人工复核。 |
 
 ### 7.7 假设与待确认决策
@@ -558,7 +557,7 @@ data: {"schema_version":"1.0","seq":8,"request_id":"01K...","run_id":"019...","t
 | D-06 | 对话保留时间 | 暂定访客数据 30 天 | 影响隐私说明、存储和清理任务 |
 | D-07 | 是否迁移旧 Kryo 会话 | 不迁移，只保留新系统数据 | 若存在真实旧数据需另做迁移工具 |
 | D-08 | 商业使用权 | 开发前确认原代码和素材授权 | 未确认时不能发布或商业化 |
-| D-09 | 部署环境 | 首版 Docker Compose，生产环境待定 | 影响域名、TLS、对象存储和监控配置 |
+| D-09 | 运行环境 | 不提供本地部署方案；目标运行环境后续单独确认 | 影响域名、TLS、对象存储和监控配置 |
 
 ## 8. 发布计划
 
@@ -573,7 +572,7 @@ data: {"schema_version":"1.0","seq":8,"request_id":"01K...","run_id":"019...","t
 
 ### 阶段 1：基础垂直切片，约 4-6 个工作日
 
-- 建立 Python、React 19、PostgreSQL、Redis 和容器骨架。
+- 建立 Python、React 19、PostgreSQL 和 Redis 集成边界。
 - 实现访客会话、创建对话、消息持久化和普通流式聊天。
 - 完成日志、请求 ID、错误协议和基础限流。
 - React 页面完成增量渲染、错误、重试和刷新恢复。
@@ -620,7 +619,7 @@ data: {"schema_version":"1.0","seq":8,"request_id":"01K...","run_id":"019...","t
 - Python API、React 19 Web、图片搜索 MCP 源码。
 - 单元、契约、集成、Playwright、安全和性能测试。
 - AI 固定评测集、基线结果和版本对比报告。
-- Docker/部署配置、运行手册、告警说明和回滚手册。
+- 运行配置说明、告警说明和回滚手册；不交付本地部署配置。
 - 第三方依赖、模型、素材和数据授权清单。
 
 ## 附录 B：首版上线检查
