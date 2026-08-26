@@ -1,0 +1,33 @@
+[project]
+name = "ai-agent-api"
+version = "0.1.0"
+description = "AI Agent FastAPI backend scaffold"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "fastapi>=0.115,<1.0",
+    "pydantic-settings>=2.6,<3.0",
+    "uvicorn[standard]>=0.34,<1.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28,<1.0",
+    "mypy>=1.14,<2.0",
+    "pytest>=8.3,<9.0",
+    "ruff>=0.9,<1.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
