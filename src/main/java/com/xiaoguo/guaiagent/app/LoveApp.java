@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(prefix = "langchain4j", name = "enabled", havingValue = "true")
 public class LoveApp {
-
+    // 同步对话服务：等待模型生成完整回答
     private final LoveAssistant assistant;
+
+    // 流式对话服务：逐段返回模型生成内容
     private final StreamingLoveAssistant streamingAssistant;
 
     public LoveApp(LoveAssistant assistant, StreamingLoveAssistant streamingAssistant) {

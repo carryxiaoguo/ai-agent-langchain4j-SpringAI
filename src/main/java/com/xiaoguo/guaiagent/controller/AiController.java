@@ -26,7 +26,7 @@ public class AiController {
         this.loveApp = loveApp;
         this.guoManus = guoManus;
     }
-
+    //
     @GetMapping("/love_app/chat/sync")
     public String doChatWithLoveAppSync(String message, String chatId) {
         return loveApp.doChat(message, chatId);
