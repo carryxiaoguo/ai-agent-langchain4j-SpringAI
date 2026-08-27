@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: yu-ai-agent
+  # 延迟创建会触发远程 Embedding/关键词增强的 RAG Bean，避免启动阶段因配额或网络问题失败
+  main:
+    lazy-initialization: true
+  profiles:
+    active: local
+# 临时注释掉，便于大家开发调试和部署（实际填写 PgVector 数据库信息）
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/ai_agent
+    username: postgres
+    password: postgres
+  ai:
+    dashscope:
+      # 需要替换为你自己的 key
+      api-key: ${DASHSCOPE_API_KEY:}
+      chat:
+        options:
+          model: qwen-plus
+          enable-thinking: false
+    #ollama:
+    #  base-url: http://localhost:11434
+    #  chat:
+    #    model: gemma3:1b
+ # 临时注释掉，便于大家开发调试和部署（实际需要启动 MCP 服务）
+    mcp:
+      client:
+        sse:
+          connections:
+            server1:
+              url: http://localhost:8127
+        # stdio MCP（高德 npx + 图片 Java 子进程）默认关闭。
+        # npx 首次下载依赖可能阻塞 Spring 启动；需要时可恢复下面两行。
+        # stdio:
+        #   servers-configuration: classpath:mcp-servers.json
+ # 临时注释掉，便于大家开发调试和部署（实际需要启动 PgVector 数据库）
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        dimensions: 1536
+        distance-type: COSINE_DISTANCE
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+# springdoc-openapi config
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.xiaoguo.guaiagent.controller
+# knife4j config
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+# searchAPI
+search-api:
+  # 需要替换为你自己的 key
+  api-key: ${SEARCH_API_KEY:}
+# 修改日志级别，查看 Spring AI 更多调用细节
+logging:
+  level:
+    org.springframework.ai: DEBUG
