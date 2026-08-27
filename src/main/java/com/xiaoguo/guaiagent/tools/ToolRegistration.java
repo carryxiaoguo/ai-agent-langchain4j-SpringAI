@@ -1,37 +1,30 @@
 package com.xiaoguo.guaiagent.tools;
 
-import org.springframework.ai.support.ToolCallbacks;
-import org.springframework.ai.tool.ToolCallback;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 /**
- * 集中的工具注册类
+ * 集中注册 LangChain4j 本地工具。
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ToolRegistration {
 
-    @Value("${search-api.api-key}")
-    private String searchApiKey;
-
     @Bean
-    public ToolCallback[] allTools() {
-        FileOperationTool fileOperationTool = new FileOperationTool();
-        WebSearchTool webSearchTool = new WebSearchTool(searchApiKey);
-        WebScrapingTool webScrapingTool = new WebScrapingTool();
-        ResourceDownloadTool resourceDownloadTool = new ResourceDownloadTool();
-        TerminalOperationTool terminalOperationTool = new TerminalOperationTool();
-        PDFGenerationTool pdfGenerationTool = new PDFGenerationTool();
-        TerminateTool terminateTool = new TerminateTool();
-        return ToolCallbacks.from(
-                fileOperationTool,
-                webSearchTool,
-                webScrapingTool,
-                resourceDownloadTool,
-                terminalOperationTool,
-                pdfGenerationTool,
-                terminateTool
-        );
+    public LocalTools localTools(@Value("${search-api.api-key:}") String searchApiKey) {
+        return new LocalTools(List.of(
+                new FileOperationTool(),
+                new WebSearchTool(searchApiKey),
+                new WebScrapingTool(),
+                new ResourceDownloadTool(),
+                new TerminalOperationTool(),
+                new PDFGenerationTool(),
+                new TerminateTool()
+        ));
+    }
+
+    public record LocalTools(List<Object> tools) {
     }
 }

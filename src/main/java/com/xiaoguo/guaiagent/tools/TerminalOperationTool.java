@@ -1,7 +1,7 @@
 package com.xiaoguo.guaiagent.tools;
 
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
+import dev.langchain4j.agent.tool.P;
+import dev.langchain4j.agent.tool.Tool;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
  */
 public class TerminalOperationTool {
 
-    @Tool(description = "Execute a command in the terminal")
-    public String executeTerminalCommand(@ToolParam(description = "Command to execute in the terminal") String command) {
+    @Tool("Execute a command in the terminal")
+    public String executeTerminalCommand(@P("Command to execute in the terminal") String command) {
         StringBuilder output = new StringBuilder();
         try {
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", command);

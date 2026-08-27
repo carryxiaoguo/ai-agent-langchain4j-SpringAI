@@ -8,8 +8,8 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.xiaoguo.guaiagent.constant.FileConstant;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
+import dev.langchain4j.agent.tool.P;
+import dev.langchain4j.agent.tool.Tool;
 
 import java.io.IOException;
 
@@ -18,10 +18,10 @@ import java.io.IOException;
  */
 public class PDFGenerationTool {
 
-    @Tool(description = "Generate a PDF file with given content", returnDirect = false)
+    @Tool("Generate a PDF file with given content")
     public String generatePDF(
-            @ToolParam(description = "Name of the file to save the generated PDF") String fileName,
-            @ToolParam(description = "Content to be included in the PDF") String content) {
+            @P("Name of the file to save the generated PDF") String fileName,
+            @P("Content to be included in the PDF") String content) {
         String fileDir = FileConstant.FILE_SAVE_DIR + "/pdf";
         String filePath = fileDir + "/" + fileName;
         try {

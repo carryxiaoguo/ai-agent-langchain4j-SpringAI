@@ -2,24 +2,21 @@
   "mcpServers": {
     "amap-maps": {
       "command": "npx.cmd",
-      "args": [
-        "-y",
-        "@amap/amap-maps-mcp-server"
-      ],
+      "args": ["-y", "@amap/amap-maps-mcp-server"],
       "env": {
         "AMAP_MAPS_API_KEY": "REPLACE_WITH_AMAP_MAPS_API_KEY"
       }
     },
-    "yu-image-search-mcp-server": {
+    "guo-image-search-mcp-server": {
       "command": "java",
       "args": [
-        "-Dspring.ai.mcp.server.stdio=true",
-        "-Dspring.main.web-application-type=none",
-        "-Dlogging.pattern.console=",
+        "-Dspring.profiles.active=stdio",
         "-jar",
-        "yu-image-search-mcp-server/target/yu-image-search-mcp-server-0.0.1-SNAPSHOT.jar"
+        "yu-image-search-mcp-server/target/guo-image-search-mcp-server-0.0.1-SNAPSHOT.jar"
       ],
-      "env": {}
+      "env": {
+        "PEXELS_API_KEY": "REPLACE_WITH_PEXELS_API_KEY"
+      }
     }
   }
 }

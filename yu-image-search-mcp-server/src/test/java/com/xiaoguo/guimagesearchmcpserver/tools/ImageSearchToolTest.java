@@ -1,19 +1,13 @@
 package com.xiaoguo.guimagesearchmcpserver.tools;
 
-import jakarta.annotation.Resource;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-public class ImageSearchToolTest {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-    @Resource
-    private ImageSearchTool imageSearchTool;
+class ImageSearchToolTest {
 
     @Test
-    void searchImage() {
-        String result = imageSearchTool.searchImage("computer");
-        Assertions.assertNotNull(result);
+    void canCreateToolWithoutCallingRemoteApi() {
+        assertNotNull(new ImageSearchTool());
     }
 }

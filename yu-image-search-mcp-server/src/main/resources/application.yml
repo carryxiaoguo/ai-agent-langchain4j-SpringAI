@@ -1,7 +1,8 @@
 spring:
   application:
-    name: yu-image-search-mcp-server
+    name: guo-image-search-mcp-server
   profiles:
-    active: sse
+    active: ${MCP_TRANSPORT:sse}
+
 server:
   port: 8127
