@@ -1,6 +1,6 @@
 spring:
   application:
-    name: yu-ai-agent
+    name: guo-ai-agent
   # 延迟创建会触发远程 Embedding/关键词增强的 RAG Bean，避免启动阶段因配额或网络问题失败
   main:
     lazy-initialization: true
