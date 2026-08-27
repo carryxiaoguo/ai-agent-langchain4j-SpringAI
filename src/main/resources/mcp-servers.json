@@ -12,7 +12,7 @@
       "args": [
         "-Dspring.profiles.active=stdio",
         "-jar",
-        "yu-image-search-mcp-server/target/guo-image-search-mcp-server-0.0.1-SNAPSHOT.jar"
+        "guo-image-search-mcp-server/target/guo-image-search-mcp-server-0.0.1-SNAPSHOT.jar"
       ],
       "env": {
         "PEXELS_API_KEY": "REPLACE_WITH_PEXELS_API_KEY"

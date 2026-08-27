@@ -40,8 +40,8 @@ ai-agent/
 │  ├─ rag/            # 文档加载、切分、向量化与检索
 │  └─ tools/          # LangChain4j 本地工具
 ├─ src/main/resources/document/  # RAG 文档
-├─ yu-image-search-mcp-server/   # 图片搜索 MCP 子模块
-├─ yu-ai-agent-frontend/         # Vue 前端
+├─ guo-image-search-mcp-server/  # 图片搜索 MCP 子模块
+├─ guo-ai-agent-frontend/        # Vue 前端
 └─ docs/                         # 架构与技术文档
 ```
 
@@ -82,7 +82,7 @@ mvn spring-boot:run
 先打包子模块：
 
 ```powershell
-cd yu-image-search-mcp-server
+cd guo-image-search-mcp-server
 $env:PEXELS_API_KEY = "你的 Pexels API Key"
 mvn clean package
 ```
@@ -112,7 +112,7 @@ stdio 客户端配置示例见 `src/main/resources/mcp-servers.json`，其中也
 
 ```powershell
 mvn test
-mvn -f yu-image-search-mcp-server/pom.xml test
+mvn -f guo-image-search-mcp-server/pom.xml test
 ```
 
 详细结构见 [架构图](docs/架构图.md)，LangChain4j 与 RAG 实现见 [技术实现](docs/LangChain4j与RAG技术实现.md)。
