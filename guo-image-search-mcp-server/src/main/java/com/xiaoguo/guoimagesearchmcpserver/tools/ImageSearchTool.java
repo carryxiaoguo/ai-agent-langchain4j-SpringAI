@@ -1,4 +1,4 @@
-package com.xiaoguo.guimagesearchmcpserver.tools;
+package com.xiaoguo.guoimagesearchmcpserver.tools;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;

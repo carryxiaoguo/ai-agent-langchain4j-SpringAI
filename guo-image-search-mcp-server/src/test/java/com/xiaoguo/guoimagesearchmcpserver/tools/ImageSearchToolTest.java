@@ -1,4 +1,4 @@
-package com.xiaoguo.guimagesearchmcpserver.tools;
+package com.xiaoguo.guoimagesearchmcpserver.tools;
 
 import org.junit.jupiter.api.Test;
 

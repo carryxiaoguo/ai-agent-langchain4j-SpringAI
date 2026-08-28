@@ -1,4 +1,4 @@
-package com.xiaoguo.guimagesearchmcpserver;
+package com.xiaoguo.guoimagesearchmcpserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiaoguo.guimagesearchmcpserver.tools.ImageSearchTool;
