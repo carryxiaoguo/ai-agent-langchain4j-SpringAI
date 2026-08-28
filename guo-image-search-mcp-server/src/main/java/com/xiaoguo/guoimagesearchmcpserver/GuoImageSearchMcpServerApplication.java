@@ -1,7 +1,7 @@
 package com.xiaoguo.guoimagesearchmcpserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xiaoguo.guimagesearchmcpserver.tools.ImageSearchTool;
+import com.xiaoguo.guoimagesearchmcpserver.tools.ImageSearchTool;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
